@@ -63,7 +63,7 @@ def weather():
     return w.weather()
 
 def latestNews(news=5):
-    URL = 'https://www.cnnindonesia.com/nasional'
+    URL = 'https://indianexpress.com/latest-news/'
     result = requests.get(URL)
     src = result.content
 
