@@ -43,7 +43,7 @@ class WEATHER:
                 pass
 
         divs = soup.find_all(
-            'div', class_='CurrentConditions--phraseValue--2xXSr')
+            'div', class_='CurrentConditions--phraseValue--mZC_p')
         for div in divs:
             self.currCondition = div.text
             break
