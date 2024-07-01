@@ -1,3 +1,4 @@
+from easygoogletranslate import EasyGoogleTranslate
 import requests
 from bs4 import BeautifulSoup
 import webbrowser
@@ -43,7 +44,7 @@ class WEATHER:
                 pass
 
         divs = soup.find_all(
-            'div', class_='CurrentConditions--phraseValue--2xXSr')
+            'div', class_='CurrentConditions--phraseValue--mZC_p')
         for div in divs:
             self.currCondition = div.text
             break
@@ -229,7 +230,16 @@ def wikiResult(query):
 def main():
     while True:
         print("\nHi, I'm your chatbot. How can I assist you today?")
-        user_input = input("You: ").lower()
+        command = input("You: ").lower()
+
+        translator = EasyGoogleTranslate(
+            source_language='id',
+            target_language='en',
+            timeout=10
+        )
+        user_input = translator.translate(command)
+
+        # print(result)
 
         if user_input in ['quit', 'exit', 'bye']:
             break
