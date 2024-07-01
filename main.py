@@ -170,7 +170,7 @@ def sendWhatsapp(phone_no='', message=''):
                     phone_no + '&text=' + message)
 
 
-def email(rec_email=None, text="Hello, It's F.R.I.D.A.Y. here...", sub='F.R.I.D.A.Y.'):
+def email(rec_email=None, text="Hello, It's Elins Students here...", sub='ELINS'):
     USERNAME = os.getenv('MAIL_USERNAME')  # email address
     PASSWORD = os.getenv('MAIL_PASSWORD')
     if not USERNAME or not PASSWORD:
@@ -187,42 +187,13 @@ def email(rec_email=None, text="Hello, It's F.R.I.D.A.Y. here...", sub='F.R.I.D.
     print("Sent")
     s.quit()
 
-
-def downloadImage(query, n=4):
-    query = query.replace('images', '')
-    query = query.replace('image', '')
-    query = query.replace('search', '')
-    query = query.replace('show', '')
-    URL = "https://www.google.com/search?tbm=isch&q=" + query
-    result = requests.get(URL)
-    src = result.content
-
-    soup = BeautifulSoup(src, 'html.parser')
-    imgTags = soup.find_all('img', class_='yWs4tf')  # old class name -> t0fcAb
-
-    if not os.path.exists('Downloads'):
-        os.mkdir('Downloads')
-
-    count = 0
-    for i in imgTags:
-        if count == n:
-            break
-        try:
-            urllib.request.urlretrieve(
-                i['src'], 'Downloads/' + str(count) + '.jpg')
-            count += 1
-            print('Downloaded', count)
-        except Exception as e:
-            raise e
-
-
 def wikiResult(query):
     query = query.replace('wikipedia', '')
     query = query.replace('search', '')
     if len(query.split()) == 0:
         query = "wikipedia"
     try:
-        return wikipedia.summary(query, sentences=2)
+        return wikipedia.summary(query, sentences=4)
     except Exception as e:
         return "Desired Result Not Found"
 
