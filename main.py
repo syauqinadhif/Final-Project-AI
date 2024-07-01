@@ -224,19 +224,29 @@ def wikiResult(query):
         return "Desired Result Not Found"
 
 
+def translator(input):
+    command = input
+    translator = EasyGoogleTranslate(
+        source_language='id',
+        target_language='en',
+        timeout=10
+    )
+    user_input = translator.translate(command)
+    return user_input
+
+
 def main():
     while True:
         print("\nHi, I'm your chatbot. How can I assist you today?")
         command = input("You: ").lower()
+        user_input = translator(command)
 
-        translator = EasyGoogleTranslate(
-            source_language='id',
-            target_language='en',
-            timeout=10
-        )
-        user_input = translator.translate(command)
-
-        # print(result)
+        # translator = EasyGoogleTranslate(
+        #     source_language='id',
+        #     target_language='en',
+        #     timeout=10
+        # )
+        # user_input = translator.translate(command)
 
         if user_input in ['quit', 'exit', 'bye']:
             break
