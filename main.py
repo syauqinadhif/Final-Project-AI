@@ -18,7 +18,7 @@ class WEATHER:
     def updateWeather(self):
         res = requests.get("https://ipinfo.io/")
         data = res.json()
-        URL = 'https://weather.com/en-IN/weather/today/'
+        URL = 'https://weather.com/en-LS/weather/today/l/202d469aad519ecb27eeaac350e06432ce637bbfb3f76de8acb391f6885983c6'
         result = requests.get(URL)
         src = result.content
 
