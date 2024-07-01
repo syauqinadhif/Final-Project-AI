@@ -67,28 +67,31 @@ def weather():
     return w.weather()
 
 
+
 def latestNews(news=5):
-    URL = 'https://indianexpress.com/latest-news/'
+    URL = 'https://detik.com'
     result = requests.get(URL)
     src = result.content
 
     soup = BeautifulSoup(src, 'html.parser')
 
-    headlineLinks = []
     headlines = []
 
-    divs = soup.find_all('div', {'class': 'title'})
+    articles = soup.find_all('article', class_='list-content__item column')
 
     count = 0
-    for div in divs:
-        count += 1
-        if count > news:
+    for article in articles:
+        if count >= news:
             break
-        a_tag = div.find('a')
-        headlineLinks.append(a_tag.attrs['href'])
-        headlines.append(a_tag.text)
+        h2_tag = article.find('h2', class_='media__title')
+        if h2_tag:
+            a_tag = h2_tag.find('a', class_='media__link')
+            if a_tag:
+                headline_text = a_tag.text.strip()
+                headlines.append(headline_text)
+                count += 1
 
-    return headlines, headlineLinks
+    return headlines
 
 
 def maps(text):
@@ -237,9 +240,13 @@ def main():
             print(response[4])
 
         elif 'news' in user_input:
-            headlines, _ = latestNews()
-            for i, headline in enumerate(headlines, start=1):
-                print(f"{i}. {headline}")
+            # headlines, _ = latestNews()
+            # for i, headline in enumerate(headlines, start=1):
+            #     print(f"{i}. {headline}")
+            headlines = latestNews(5)
+            for idx, headline in enumerate(headlines, start=1):
+                print(f"{idx}. {headline}")
+
 
         elif 'directions' in user_input or 'navigate' in user_input or 'maps' in user_input:
             print("Please provide starting and destination points:")
