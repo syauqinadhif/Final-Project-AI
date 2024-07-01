@@ -2,9 +2,6 @@ from easygoogletranslate import EasyGoogleTranslate
 import requests
 from bs4 import BeautifulSoup
 import webbrowser
-import os
-import smtplib
-import urllib.request
 from geopy.geocoders import Nominatim
 from geopy.distance import great_circle
 import wikipedia
