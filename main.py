@@ -77,6 +77,7 @@ def latestNews(news=5):
     soup = BeautifulSoup(src, 'html.parser')
 
     headlines = []
+    headlineLinks = []
 
     articles = soup.find_all('article', class_='list-content__item column')
 
@@ -90,9 +91,10 @@ def latestNews(news=5):
             if a_tag:
                 headline_text = a_tag.text.strip()
                 headlines.append(headline_text)
+                headlineLinks.append(a_tag.attrs['href'])
                 count += 1
 
-    return headlines
+    return headlines, headlineLinks
 
 
 def maps(text):
@@ -208,9 +210,12 @@ def main():
             # headlines, _ = latestNews()
             # for i, headline in enumerate(headlines, start=1):
             #     print(f"{i}. {headline}")
-            headlines = latestNews(5)
+            headlines,headlineLinks = latestNews(5)
             for idx, headline in enumerate(headlines, start=1):
+                print() 
                 print(f"{idx}. {headline}")
+                print(f"Link: {headlineLinks[idx-1]}")
+                print() 
 
 
         elif 'directions' in user_input or 'navigate' in user_input or 'maps' in user_input:
