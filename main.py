@@ -7,6 +7,8 @@ import urllib.request
 from geopy.geocoders import Nominatim
 from geopy.distance import great_circle
 import wikipedia
+# test
+
 
 class WEATHER:
     def __init__(self):
@@ -18,7 +20,7 @@ class WEATHER:
     def updateWeather(self):
         res = requests.get("https://ipinfo.io/")
         data = res.json()
-        URL = 'https://weather.com/en-IN/weather/today/'
+        URL = 'https://weather.com/en-LS/weather/today/l/202d469aad519ecb27eeaac350e06432ce637bbfb3f76de8acb391f6885983c6'
         result = requests.get(URL)
         src = result.content
 
@@ -40,7 +42,8 @@ class WEATHER:
             except Exception as e:
                 pass
 
-        divs = soup.find_all('div', class_='CurrentConditions--phraseValue--2xXSr')
+        divs = soup.find_all(
+            'div', class_='CurrentConditions--phraseValue--2xXSr')
         for div in divs:
             self.currCondition = div.text
             break
@@ -48,7 +51,8 @@ class WEATHER:
     def weather(self):
         from datetime import datetime
         today = datetime.today().strftime('%A')
-        self.speakResult = "Currently in " + self.city + ", its " + self.tempValue + " degree, with " + self.currCondition
+        self.speakResult = "Currently in " + self.city + ", its " + \
+            self.tempValue + " degree, with " + self.currCondition
         return [self.tempValue, self.currCondition, today, self.city, self.speakResult]
 
 
@@ -61,6 +65,7 @@ def dataUpdate():
 
 def weather():
     return w.weather()
+
 
 def latestNews(news=5):
     URL = 'https://indianexpress.com/latest-news/'
@@ -106,11 +111,15 @@ def giveDirections(startingPoint, destinationPoint):
     startingPoint = startinglocation.address.replace(' ', '+')
     destinationPoint = destinationlocation.address.replace(' ', '+')
 
-    openWebsite('https://www.google.co.in/maps/dir/' + startingPoint + '/' + destinationPoint + '/')
+    openWebsite('https://www.google.co.in/maps/dir/' +
+                startingPoint + '/' + destinationPoint + '/')
 
-    startinglocationCoordinate = (startinglocation.latitude, startinglocation.longitude)
-    destinationlocationCoordinate = (destinationlocation.latitude, destinationlocation.longitude)
-    total_distance = great_circle(startinglocationCoordinate, destinationlocationCoordinate).km  # .mile
+    startinglocationCoordinate = (
+        startinglocation.latitude, startinglocation.longitude)
+    destinationlocationCoordinate = (
+        destinationlocation.latitude, destinationlocation.longitude)
+    total_distance = great_circle(
+        startinglocationCoordinate, destinationlocationCoordinate).km  # .mile
     return str(round(total_distance, 2)) + 'KM'
 
 
@@ -153,7 +162,8 @@ def googleSearch(query):
 
 def sendWhatsapp(phone_no='', message=''):
     phone_no = '+62' + str(phone_no)
-    webbrowser.open('https://web.whatsapp.com/send?phone=' + phone_no + '&text=' + message)
+    webbrowser.open('https://web.whatsapp.com/send?phone=' +
+                    phone_no + '&text=' + message)
 
 
 def email(rec_email=None, text="Hello, It's F.R.I.D.A.Y. here...", sub='F.R.I.D.A.Y.'):
@@ -194,7 +204,8 @@ def downloadImage(query, n=4):
         if count == n:
             break
         try:
-            urllib.request.urlretrieve(i['src'], 'Downloads/' + str(count) + '.jpg')
+            urllib.request.urlretrieve(
+                i['src'], 'Downloads/' + str(count) + '.jpg')
             count += 1
             print('Downloaded', count)
         except Exception as e:
@@ -235,21 +246,25 @@ def main():
             startingPoint = input("Starting Point: ")
             destinationPoint = input("Destination Point: ")
             distance = giveDirections(startingPoint, destinationPoint)
-            print(f"Distance between {startingPoint} and {destinationPoint}: {distance}")
+            print(
+                f"Distance between {startingPoint} and {destinationPoint}: {distance}")
 
         elif 'wiki' in user_input or 'wikipedia' in user_input or 'search' in user_input:
-            query = user_input.replace('wiki', '').replace('wikipedia', '').replace('search', '')
+            query = user_input.replace('wiki', '').replace(
+                'wikipedia', '').replace('search', '')
             print(wikiResult(query))
 
         elif 'joke' in user_input or 'funny' in user_input:
             print(jokes())
 
         elif 'youtube' in user_input or 'video' in user_input or 'play' in user_input:
-            query = user_input.replace('youtube', '').replace('video', '').replace('play', '')
+            query = user_input.replace('youtube', '').replace(
+                'video', '').replace('play', '')
             youtube(query)
 
         elif 'google' in user_input or 'search' in user_input or 'image' in user_input:
-            query = user_input.replace('google', '').replace('search', '').replace('image', '')
+            query = user_input.replace('google', '').replace(
+                'search', '').replace('image', '')
             googleSearch(query)
 
         elif 'whatsapp' in user_input or 'message' in user_input or 'send' in user_input:
@@ -265,6 +280,7 @@ def main():
 
         else:
             print("Sorry, I don't understand that. Please ask something else.")
+
 
 if __name__ == "__main__":
     main()
