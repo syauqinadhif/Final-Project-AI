@@ -130,14 +130,6 @@ def giveDirections(startingPoint, destinationPoint):
 def openWebsite(url='https://www.google.com/'):
     webbrowser.open(url)
 
-
-def jokes():
-    URL = 'https://icanhazdadjoke.com/'
-    result = requests.get(URL, headers={"Accept": "application/json"})
-    joke = result.json()['joke']
-    return joke
-
-
 def youtube(query):
     query = query.replace('play', ' ')
     query = query.replace('on youtube', ' ')
@@ -168,24 +160,6 @@ def sendWhatsapp(phone_no='', message=''):
     phone_no = '+62' + str(phone_no)
     webbrowser.open('https://web.whatsapp.com/send?phone=' +
                     phone_no + '&text=' + message)
-
-
-def email(rec_email=None, text="Hello, It's Elins Students here...", sub='ELINS'):
-    USERNAME = os.getenv('MAIL_USERNAME')  # email address
-    PASSWORD = os.getenv('MAIL_PASSWORD')
-    if not USERNAME or not PASSWORD:
-        raise Exception(
-            "MAIL_USERNAME or MAIL_PASSWORD are not loaded in environment, create a .env file and add these 2 values")
-
-    if '@gmail.com' not in rec_email:
-        return
-    s = smtplib.SMTP('smtp.gmail.com', 587)
-    s.starttls()
-    s.login(USERNAME, PASSWORD)
-    message = 'Subject: {}\n\n{}'.format(sub, text)
-    s.sendmail(USERNAME, rec_email, message)
-    print("Sent")
-    s.quit()
 
 def wikiResult(query):
     query = query.replace('wikipedia', '')
@@ -252,9 +226,6 @@ def main():
                 'wikipedia', '').replace('search', '')
             print(wikiResult(query))
 
-        elif 'joke' in user_input or 'funny' in user_input:
-            print(jokes())
-
         elif 'youtube' in user_input or 'video' in user_input or 'play' in user_input:
             query = user_input.replace('youtube', '').replace(
                 'video', '').replace('play', '')
@@ -269,12 +240,6 @@ def main():
             phone_no = input("Enter phone number: ")
             message = input("Enter message: ")
             sendWhatsapp(phone_no, message)
-
-        elif 'email' in user_input or 'mail' in user_input:
-            rec_email = input("Enter recipient email address: ")
-            subject = input("Enter subject: ")
-            content = input("Enter email content: ")
-            email(rec_email, content, subject)
 
         else:
             print("Sorry, I don't understand that. Please ask something else.")
